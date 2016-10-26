@@ -61,7 +61,9 @@ public:
 
 template <class ValType>
 TVector<ValType>::TVector(int s, int si)
-{
+{	
+	if (s<=0)||(si<=0)
+		throw "Неверно заданы параметры";
 	pVector - new ValType[s];
 	Size = s;
 	StartIndex = si;
@@ -73,6 +75,8 @@ TVector<ValType>::TVector(const TVector<ValType> &v)
 	pVector = new ValType[v.Size];
 	Size = v.Size;
 	StartIndex = v.StartIndex;
+	for (int i=0; i<Size; i++) 
+		pVector[i] = v.pVector[i];
 }
 
 template <class ValType>
@@ -84,11 +88,11 @@ TVector<ValType>::~TVector()
 template <class ValType> // доступ 
 ValType& TVector<ValType>::operator[](int pos)
 {
-	if (pos>StartIndex)
+	if (pos>=StartIndex)||(pos<Size)
 	{
 		return pVector[pos - StartIndex];
 	}
-	else return pVector[StartIndex - pos];
+	else throw "Неверно задан индекс";
 }
 
 template <class ValType> // сравнение 
@@ -97,7 +101,7 @@ bool TVector<ValType>::operator==(const TVector &v) const
 	bool result = true;
 	if (this == &v) return result;
 	if ((StartIndex != v.StartIndex) || (Size != v.Size)) result = false;
-	else for (int i = StartIndex; i < Size; i++)
+	else for (int i = 0; i < Size; i++)
 	{
 		if (pVector[i] != v.pVector[i])
 		{
@@ -111,19 +115,7 @@ bool TVector<ValType>::operator==(const TVector &v) const
 template <class ValType> // сравнение 
 bool TVector<ValType>::operator!=(const TVector &v) const
 {
-	bool result = false;
-	if (Size == v.Size)
-	{
-		for (int i = 0; i<Size; i++)
-			if (pVector[i] != v.pVector[i])
-			{
-				result = true;
-				break;
-			}
-
-	}
-	else result = true;
-	return result;
+	return !(this == &v);
 }
 
 template <class ValType> // присваивание 
@@ -244,8 +236,12 @@ public:
 template <class ValType>
 TMatrix<ValType>::TMatrix(int s) : TVector<TVector<ValType> >(s)
 {
-	for (int i = 0;i<s;i++)
+	if (s>0)||(s<MAX_MATRIX_SIZE)
+	{
+	for (int i = 0; i < s ; i++)
 		pVector[i] = TVector<ValType>(s - i, i);
+	}
+	else throw "Неверно задан размер матрицы";
 }
 
 template <class ValType> // конструктор копирования 
@@ -262,8 +258,8 @@ bool TMatrix<ValType>::operator==(const TMatrix<ValType> &mt) const
 	bool result = true;
 	if (this == &mt) return result;
 
-	if (Size != mt.Size || StartIndex != mt.StartIndex) result = false;
-	else for (int i = StartIndex; i < Size; i++) {
+	if (Size != mt.Size) result = false;
+	else for (int i = 0; i < Size; i++) {
 		if (mt.pVector[i] != pVector[i])
 			result = false;
 	}
@@ -274,16 +270,7 @@ bool TMatrix<ValType>::operator==(const TMatrix<ValType> &mt) const
 template <class ValType> // сравнение 
 bool TMatrix<ValType>::operator!=(const TMatrix<ValType> &mt) const
 {
-	bool result = false;
-	if (this == &mt) return result;
-
-	if (Size != mt.Size || StartIndex != mt.StartIndex) result = true;
-	else for (int i = StartIndex; i < Size; i++) {
-		if (mt.pVector[i] != pVector[i])
-			result = true;
-	}
-
-	return result;
+	return !(this == &mt)
 }
 
 template <class ValType> // присваивание 
