@@ -62,7 +62,8 @@ public:
 template <class ValType>
 TVector<ValType>::TVector(int s, int si)
 {	
-	if (s<=0)||(si<=0)
+	if (s<=0)||(s>MAX_VECTOR_SIZE)
+		if (si<0)||(si>s)
 		throw "Неверно заданы параметры";
 	pVector - new ValType[s];
 	Size = s;
