@@ -41,7 +41,7 @@ TEST(TVector, copied_vector_has_its_own_memory)
 	v[1] = 4;
 	TVector<int> v1(v);
 	v1[1] = 5;
-	EXPECT_EQ(v, v1);
+	EXPECT_NE(v, v1);
 
 }
 
@@ -126,7 +126,7 @@ TEST(TVector, compare_equal_vectors_return_true)
 	v1[0] = 0;
 	v1[1] = 1;
 	v1[2] = 2;
-	ASSERT_TRUE(v1 == v);
+	EXPECT_EQ(v, v1);
 }
 
 TEST(TVector, compare_vector_with_itself_return_true)
@@ -135,7 +135,7 @@ TEST(TVector, compare_vector_with_itself_return_true)
 	v[0] = 0;
 	v[1] = 1;
 	v[2] = 2;
-	ASSERT_TRUE(v == v);
+	EXPECT_EQ(v, v);
 }
 
 TEST(TVector, vectors_with_different_size_are_not_equal)
@@ -147,7 +147,7 @@ TEST(TVector, vectors_with_different_size_are_not_equal)
 	v1[0] = 0;
 	v1[1] = 1;
 	v1[2] = 2;
-	ASSERT_FALSE(v1 == v);
+	EXPECT_NE(v, v1);
 }
 
 TEST(TVector, can_add_scalar_to_vector)

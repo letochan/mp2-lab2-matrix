@@ -38,7 +38,7 @@ TEST(TMatrix, copied_matrix_has_its_own_memory)
 	M[1][1] = 4;
 	TMatrix<int> M1(M);
 	M1[1][1] = 5;
-	EXPECT_EQ(M, M1);
+	EXPECT_NE(M, M1);
 }
 
 TEST(TMatrix, can_get_size)
@@ -102,14 +102,14 @@ TEST(TMatrix, compare_equal_matrices_return_true)
 	TMatrix<int> M(3), M1(3);
 	M[1][1] = 1;
 	M1[1][1] = 1;
-	ASSERT_TRUE(M1 == M);
+	EXPECT_EQ(M, M1);
 }
 
 TEST(TMatrix, compare_matrix_with_itself_return_true)
 {
 	TMatrix<int> M(3), M1(3);
 	M[1][1] = 1;
-	ASSERT_TRUE(M == M);
+	EXPECT_EQ(M, M);
 }
 
 TEST(TMatrix, matrices_with_different_size_are_not_equal)
@@ -117,7 +117,7 @@ TEST(TMatrix, matrices_with_different_size_are_not_equal)
 	TMatrix<int> M(3), M1(5);
 	M[1][1] = 1;
 	M1[1][1] = 1;
-	ASSERT_FALSE(M1 == M);
+	EXPECT_NE(M, M1);
 }
 
 TEST(TMatrix, can_add_matrices_with_equal_size)
