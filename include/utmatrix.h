@@ -89,7 +89,7 @@ TVector<ValType>::~TVector()
 template <class ValType> // доступ 
 ValType& TVector<ValType>::operator[](int pos)
 {
-	if (pos>=StartIndex)||(pos<Size)
+	if (pos>=StartIndex)||(pos<(Size-1))
 	{
 		return pVector[pos - StartIndex];
 	}
