@@ -172,7 +172,7 @@ TEST(TVector, can_subtract_scalar_from_vector)
 	v[0] = 0;
 	v[1] = 1;
 	v[2] = 2; // v1 = (012) 
-	v = v - 1;
+	v1 = v1 - 1;
 	EXPECT_EQ(v1, v);
 }
 
@@ -257,10 +257,8 @@ TEST(TVector, can_multiply_vectors_with_equal_size)
 	v1[0] = 2;
 	v1[1] = 2;
 	v1[2] = 4; // v1 = (224) 
-	v2[0] = 0;
-	v2[1] = 2;
-	v2[2] = 8; // v+v1 = (028) 
-	EXPECT_EQ(v1 - v, v2);
+	 // v*v1 = 10 
+	EXPECT_EQ(v1 * v, 10);
 }
 
 TEST(TVector, cant_multiply_vectors_with_not_equal_size)

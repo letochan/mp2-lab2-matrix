@@ -9,7 +9,7 @@ TEST(TMatrix, can_create_matrix_with_positive_length)
 
 TEST(TMatrix, cant_create_too_large_matrix)
 {
-	ASSERT_ANY_THROW(TMatrix<int> m(MAX_MATRIX_SIZE + 1));
+	ASSERT_ANY_THROW(TMatrix<int> m(MAX_MATRIX_SIZE + 100));
 }
 
 TEST(TMatrix, throws_when_create_matrix_with_negative_length)
@@ -156,11 +156,13 @@ TEST(TMatrix, can_subtract_matrices_with_equal_size)
 	TMatrix<int> M(size), M1(size), M2(size);
 	M[0][0] = 5;
 	M[0][1] = 4;
+	M[1][0] = 0;
 	M[1][1] = 6;
 	// (5 4) 
 	// M = (0 6) 
 	M1[0][0] = 2;
 	M1[0][1] = 3;
+	M1[1][0] = 0;
 	M1[1][1] = 1;
 	// (2 3) 
 	//M1 = (0 1) 
@@ -169,7 +171,7 @@ TEST(TMatrix, can_subtract_matrices_with_equal_size)
 	M2[1][1] = 5;
 	// (3 1) 
 	//M1 - M = (0 5) 
-	EXPECT_EQ(M1 - M, M2);
+	EXPECT_EQ(M - M1, M2);
 }
 
 TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
